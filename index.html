@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tara Shot?</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #rakImage, #responseText, #passImage {
+            display: none;
+        }
+
+        #rakImage, #passImage {
+            width: 100px;
+            height: 100px;
+            transition: width 0.3s, height 0.3s;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column align-items-center justify-content-center vh-100">
+
+    <h1 class="mb-4">Tara Shot?</h1>
+
+    <div class="d-flex gap-3">
+        <button id="rakBtn" class="btn btn-success">Rak!</button>
+        <button id="passBtn" class="btn btn-danger">Pass!</button>
+    </div>
+
+    <img id="rakImage" src="img/kilig_img.jpg" class="img-fluid mt-4" alt="Rak Image">
+    <img id="passImage" src="img/rak_img.jpg" class="img-fluid mt-4" alt="Pass Image">
+    <p id="responseText" class="mt-4 fw-bold"></p>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        let passClickCount = 0;
+
+        function randomPosition(button) {
+            let x = Math.floor(Math.random() * ($(window).width() - button.width()));
+            let y = Math.floor(Math.random() * ($(window).height() - button.height()));
+            button.css({
+                position: 'absolute',
+                top: y + 'px',
+                left: x + 'px'
+            });
+        }
+
+        $(document).ready(function() {
+            $("#rakBtn").click(function() {
+                $("#rakImage").fadeIn(function() {
+                    $(this).css({
+                        width: '300px', 
+                        height: '300px' 
+                    });
+                });
+                $("#responseText").text("Etneb ko na, PM moko! HAHAHAHAH!").fadeIn();
+                $("#passImage").fadeOut(); 
+                $("#passBtn").fadeOut();  
+            });
+
+            $("#passBtn").click(function() {
+                passClickCount++;
+                if (passClickCount === 1) {
+                    $("#responseText").text("One bottle lang eh para ka namang tanga! haha").fadeIn();
+                } else if (passClickCount === 2) {
+                    $("#responseText").text("Isa! Bawal mag pass hmmp!").fadeIn();
+                } else if (passClickCount === 3) {
+                    $("#responseText").text("Ah ganon ayaw mo talaga ako kasama? Magdusa ka magpass jan!!").fadeIn();
+                    $("#passImage").fadeIn(function() {
+                        $(this).css({
+                            width: '300px',
+                            height: '300px'
+                        });
+                    });
+                }
+                randomPosition($(this));
+            });
+
+            $("#passBtn").hover(function() {
+                if (passClickCount >= 3) {
+                    randomPosition($(this));
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
